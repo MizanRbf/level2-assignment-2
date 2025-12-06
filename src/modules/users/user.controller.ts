@@ -73,4 +73,5 @@ export const userControllers = {
   createUser,
   getUser,
   updateUser,
+  deleteUser,
 };
