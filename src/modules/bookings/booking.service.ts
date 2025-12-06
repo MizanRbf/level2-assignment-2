@@ -16,8 +16,22 @@ const getBookings = async () => {
   return result;
 };
 
+// Update Bookings
+const updateBooking = async () => {
+  const result = await pool.query(``);
+  return result;
+};
+
+// Delete Bookings
+const deleteBooking = async () => {
+  const result = await pool.query(``);
+  return result;
+};
+
 // Export
 export const bookingServices = {
   createBooking,
   getBookings,
+  updateBooking,
+  deleteBooking,
 };

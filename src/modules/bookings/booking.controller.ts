@@ -37,8 +37,42 @@ const getBookings = async (req: Request, res: Response) => {
   }
 };
 
+// Update Booking
+const updateBooking = async (req: Request, res: Response) => {
+  try {
+    const result = await bookingServices.updateBooking();
+    res.status(200).json({
+      success: true,
+      message: "Updated Successfully",
+    });
+  } catch (err: any) {
+    res.status(400).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+// Delete Booking
+const deleteBooking = async (req: Request, res: Response) => {
+  try {
+    const result = await bookingServices.deleteBooking();
+    res.status(200).json({
+      success: true,
+      message: "Deleted successfully",
+    });
+  } catch (err: any) {
+    res.status(400).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
 // Export
 export const bookingControllers = {
   createBooking,
   getBookings,
+  updateBooking,
+  deleteBooking,
 };
