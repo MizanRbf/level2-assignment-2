@@ -30,8 +30,22 @@ const getVehicles = async () => {
   return result;
 };
 
+// Update Vehicle
+const updateVehicle = async () => {
+  const result = await pool.query(``);
+  return result;
+};
+
+// Delete Vehicle
+const deleteVehicle = async () => {
+  const result = await pool.query(``);
+  return result;
+};
+
 // Export
 export const vehicleServices = {
   createVehicles,
   getVehicles,
+  updateVehicle,
+  deleteVehicle,
 };

@@ -2,8 +2,12 @@ import express from "express";
 import { vehicleControllers } from "./vehicle.controller";
 const router = express.Router();
 
-router.post("/", vehicleControllers.createVehicles);
+router.post("/", vehicleControllers.createVehicle);
 
-router.get("/", vehicleControllers.getVehicles);
+router.get("/", vehicleControllers.getVehicle);
+
+router.put("/", vehicleControllers.updateVehicle);
+
+router.delete("/", vehicleControllers.deleteVehicle);
 
 export const vehicleRoutes = router;

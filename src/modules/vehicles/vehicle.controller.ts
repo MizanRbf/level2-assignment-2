@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { vehicleServices } from "./vehicle.service";
 
-// Create Vehicles
-const createVehicles = async (req: Request, res: Response) => {
+// Create Vehicle
+const createVehicle = async (req: Request, res: Response) => {
   try {
     const result = await vehicleServices.createVehicles(req.body);
     res.status(200).json({
@@ -19,7 +19,7 @@ const createVehicles = async (req: Request, res: Response) => {
 };
 
 // Get Vehicles
-const getVehicles = async (req: Request, res: Response) => {
+const getVehicle = async (req: Request, res: Response) => {
   try {
     const result = await vehicleServices.getVehicles();
     res.status(200).json({
@@ -35,8 +35,42 @@ const getVehicles = async (req: Request, res: Response) => {
   }
 };
 
+// Update Vehicle
+const updateVehicle = async (req: Request, res: Response) => {
+  try {
+    const result = await vehicleServices.updateVehicle();
+    res.status(200).json({
+      success: true,
+      message: "Updated Successfully",
+    });
+  } catch (err: any) {
+    res.status(400).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+// Delete Vehicle
+const deleteVehicle = async (req: Request, res: Response) => {
+  try {
+    const result = await vehicleServices.deleteVehicle();
+    res.status(200).json({
+      success: true,
+      message: "Deleted Successfully",
+    });
+  } catch (err: any) {
+    res.status(400).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
 // Export
 export const vehicleControllers = {
-  createVehicles,
-  getVehicles,
+  createVehicle,
+  getVehicle,
+  updateVehicle,
+  deleteVehicle,
 };
