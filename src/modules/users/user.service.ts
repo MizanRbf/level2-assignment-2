@@ -18,8 +18,22 @@ const getUser = async () => {
   return result;
 };
 
+// Update users
+const updateUser = async () => {
+  const result = await pool.query(``);
+  return result;
+};
+
+// Delete Users
+const deleteUser = async () => {
+  const result = await pool.query(``);
+  return result;
+};
+
 // Export
 export const userServices = {
   createUser,
   getUser,
+  updateUser,
+  deleteUser,
 };
