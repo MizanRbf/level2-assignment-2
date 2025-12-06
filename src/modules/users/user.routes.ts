@@ -8,9 +8,9 @@ router.post("/", userControllers.createUser);
 router.get("/", userControllers.getUser);
 
 // router.put("/");
-router.put("/", userControllers.updateUser);
+router.put("/:id", userControllers.updateUser);
 
 // router.delete("/");
-router.delete("/", userControllers.deleteUser);
+router.delete("/:id", userControllers.deleteUser);
 
 export const userRoutes = router;

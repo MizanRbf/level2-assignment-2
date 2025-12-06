@@ -11,10 +11,10 @@ router.post("/", bookingControllers.createBooking);
 router.get("/", bookingControllers.getBookings);
 
 // Update Booking
-router.put("/", userControllers.updateUser);
+router.put("/:id", userControllers.updateUser);
 
 // Delete Booking
-router.delete("/", userControllers.deleteUser);
+router.delete("/:id", userControllers.deleteUser);
 
 // Export
 export const bookingRoutes = router;
