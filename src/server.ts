@@ -2,19 +2,20 @@ import express from "express";
 import { Request, Response } from "express";
 import initDB from "./config/db";
 import config from "./config";
+import { userRoutes } from "./modules/users/user.routes";
 
 const app = express();
 const port = config.port;
 
-// DB
-initDB();
-
 // parser
 app.use(express.json());
 
-app.use("/users");
-app.use("/customer");
-app.use("/vehicle");
+// DB
+initDB();
+
+app.use("/users", userRoutes);
+// app.use("/bookings");
+// app.use("/vehicle");
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
