@@ -1,5 +1,6 @@
 import { pool } from "../../config/db";
 
+// Create User
 const createUser = async (user: any) => {
   const { name, email, password, phone, role } = user;
   const result = await pool.query(
@@ -10,10 +11,14 @@ const createUser = async (user: any) => {
   );
   return result;
 };
+
+// Get User
 const getUser = async () => {
   const result = await pool.query(`SELECT * FROM users`);
   return result;
 };
+
+// Export
 export const userServices = {
   createUser,
   getUser,
