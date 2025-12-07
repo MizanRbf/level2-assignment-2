@@ -1,5 +1,7 @@
 import { pool } from "../../config/db";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import config from "../../config";
 
 const loginUser = async (email: string, password: string) => {
   // user checkup
@@ -24,4 +26,17 @@ const loginUser = async (email: string, password: string) => {
   }
 
   // token generate
+  const token = jwt.sign(
+    { name: user.name, email: user.email },
+    config.jwtSecret as string,
+    {
+      expiresIn: "7d",
+    }
+  );
+  console.log({ token });
+
+  return { user, token };
+};
+export const authService = {
+  loginUser,
 };
