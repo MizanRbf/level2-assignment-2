@@ -30,7 +30,7 @@ const loginUser = async (email: string, password: string) => {
     { name: user.name, email: user.email },
     config.jwtSecret as string,
     {
-      expiresIn: "7d",
+      expiresIn: "20d",
     }
   );
   console.log({ token });
