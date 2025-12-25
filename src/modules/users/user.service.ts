@@ -22,6 +22,12 @@ const getUser = async () => {
   return result;
 };
 
+// Get Single User
+const getSingleUser = async (id: any) => {
+  const result = await pool.query(`SELECT * FROM users WHERE id = $1`, [id]);
+  return result;
+};
+
 // Update users
 const updateUser = async () => {
   const result = await pool.query(``);
@@ -40,4 +46,5 @@ export const userServices = {
   getUser,
   updateUser,
   deleteUser,
+  getSingleUser,
 };

@@ -36,6 +36,24 @@ const getUser = async (req: Request, res: Response) => {
   }
 };
 
+// Get Single User
+const getSingleUser = async (req: Request, res: Response) => {
+  try {
+    const result = await userServices.getSingleUser(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: "user found",
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
 // Update User
 const updateUser = async (req: Request, res: Response) => {
   try {
@@ -74,4 +92,5 @@ export const userControllers = {
   getUser,
   updateUser,
   deleteUser,
+  getSingleUser,
 };
