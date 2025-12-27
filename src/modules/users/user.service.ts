@@ -5,6 +5,10 @@ import bcrypt from "bcryptjs";
 const createUser = async (payload: Record<string, unknown>) => {
   const { name, email, password, phone, role } = payload;
 
+  if ((password as string).length < 6) {
+    throw new Error("Password must be at least 6 characters");
+  }
+
   const hashedPass = await bcrypt.hash(password as string, 10);
 
   const result = await pool.query(
