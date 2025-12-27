@@ -39,8 +39,25 @@ const getSingleVehicles = async (vehicleId: any) => {
 };
 
 // Update Vehicle
-const updateVehicle = async () => {
-  const result = await pool.query(``);
+const updateVehicle = async (vehicleId: number, body: any) => {
+  const {
+    vehicle_name,
+    type,
+    registration_number,
+    daily_rent_price,
+    availability_status,
+  } = body;
+  const result = await pool.query(
+    `UPDATE vehicles SET vehicle_name = $1, type = $2, registration_number = $3, daily_rent_price = $4, availability_status = $5 WHERE id = $6 RETURNING *`,
+    [
+      vehicle_name,
+      type,
+      registration_number,
+      daily_rent_price,
+      availability_status,
+      vehicleId,
+    ]
+  );
   return result;
 };
 
