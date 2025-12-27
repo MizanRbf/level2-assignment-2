@@ -13,8 +13,5 @@ router.get("/", bookingControllers.getBookings);
 // Update Booking
 router.put("/:id", userControllers.updateUser);
 
-// Delete Booking
-router.delete("/:id", userControllers.deleteUser);
-
 // Export
 export const bookingRoutes = router;

@@ -22,16 +22,9 @@ const updateBooking = async () => {
   return result;
 };
 
-// Delete Bookings
-const deleteBooking = async () => {
-  const result = await pool.query(``);
-  return result;
-};
-
 // Export
 export const bookingServices = {
   createBooking,
   getBookings,
   updateBooking,
-  deleteBooking,
 };
