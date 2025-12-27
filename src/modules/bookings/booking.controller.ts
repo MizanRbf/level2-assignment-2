@@ -40,10 +40,14 @@ const getBookings = async (req: Request, res: Response) => {
 // Update Booking
 const updateBooking = async (req: Request, res: Response) => {
   try {
-    const result = await bookingServices.updateBooking();
+    const result = await bookingServices.updateBooking(
+      Number(req.params.id),
+      req.body
+    );
     res.status(200).json({
       success: true,
       message: "Updated Successfully",
+      data: result.rows,
     });
   } catch (err: any) {
     res.status(400).json({
