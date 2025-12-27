@@ -8,8 +8,12 @@ const getUser = async () => {
 };
 
 // Update users
-const updateUser = async () => {
-  const result = await pool.query(``);
+const updateUser = async (id: number, body: any) => {
+  const { name, email, password, phone, role } = body;
+  const result = await pool.query(
+    `UPDATE users SET name = $1, email = $2, password = $3, phone = $4, role = $5  WHERE id = $6 RETURNING *`,
+    [name, email, password, phone, role, id]
+  );
   return result;
 };
 
