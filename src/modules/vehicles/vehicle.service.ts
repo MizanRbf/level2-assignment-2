@@ -62,8 +62,10 @@ const updateVehicle = async (vehicleId: number, body: any) => {
 };
 
 // Delete Vehicle
-const deleteVehicle = async () => {
-  const result = await pool.query(``);
+const deleteVehicle = async (vehicleId: number) => {
+  const result = await pool.query(`DELETE FROM vehicles WHERE id = $1`, [
+    vehicleId,
+  ]);
   return result;
 };
 

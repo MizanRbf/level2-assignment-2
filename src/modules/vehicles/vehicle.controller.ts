@@ -77,7 +77,9 @@ const updateVehicle = async (req: Request, res: Response) => {
 // Delete Vehicle
 const deleteVehicle = async (req: Request, res: Response) => {
   try {
-    const result = await vehicleServices.deleteVehicle();
+    const result = await vehicleServices.deleteVehicle(
+      Number(req.params.vehicleId)
+    );
     res.status(200).json({
       success: true,
       message: "Deleted Successfully",
