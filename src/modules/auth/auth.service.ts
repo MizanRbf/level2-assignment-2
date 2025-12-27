@@ -45,6 +45,9 @@ const loginUser = async (email: string, password: string) => {
     return false;
   }
 
+  // Remove password manually
+  delete user.password;
+
   // token generate
   const token = jwt.sign(
     { name: user.name, email: user.email, role: user.role },
@@ -53,9 +56,8 @@ const loginUser = async (email: string, password: string) => {
       expiresIn: "20d",
     }
   );
-  console.log({ token });
 
-  return { user, token };
+  return { token, user };
 };
 export const authService = {
   loginUser,
