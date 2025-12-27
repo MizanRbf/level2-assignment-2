@@ -16,16 +16,16 @@ initDB();
 
 // APIs
 // users CRUD
-app.use("/users", userRoutes);
+app.use("/api/v1/users", userRoutes);
 
 // vehicles CRUD
-app.use("/vehicles", vehicleRoutes);
+app.use("/api/v1/vehicles", vehicleRoutes);
 
 // bookings CRUD
-app.use("/bookings", bookingRoutes);
+app.use("/api/v1/bookings", bookingRoutes);
 
 // auth routes
-app.use("/auth", authRoutes);
+app.use("/api/v1/auth", authRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
