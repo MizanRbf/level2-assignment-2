@@ -8,8 +8,6 @@ router.post("/", userControllers.createUser);
 
 router.get("/", auth("admin"), userControllers.getUser);
 
-router.get("/:id", auth("admin", "user"), userControllers.getSingleUser);
-
 // router.put("/");
 router.put("/:id", userControllers.updateUser);
 
