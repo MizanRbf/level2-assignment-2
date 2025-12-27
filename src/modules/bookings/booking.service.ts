@@ -31,7 +31,7 @@ const getBookings = async () => {
 };
 
 // Update Bookings
-const updateBooking = async (id: number, body: any) => {
+const updateBooking = async (bookingId: number, body: any) => {
   const {
     customer_id,
     vehicle_id,
@@ -54,7 +54,7 @@ status = $6 WHERE id = $7 RETURNING *`,
       rent_end_date,
       total_price,
       status,
-      id,
+      bookingId,
     ]
   );
   return result;

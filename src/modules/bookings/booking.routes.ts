@@ -11,7 +11,7 @@ router.post("/", bookingControllers.createBooking);
 router.get("/", bookingControllers.getBookings);
 
 // Update Booking
-router.put("/:id", bookingControllers.updateBooking);
+router.put("/:bookingId", bookingControllers.updateBooking);
 
 // Export
 export const bookingRoutes = router;

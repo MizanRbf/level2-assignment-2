@@ -6,9 +6,12 @@ const createUser = async (req: Request, res: Response) => {
   const user = req.body;
   try {
     const result = await authService.createUser(user);
-    res.status(200).json({
+    const userInfo = result.rows[0];
+    const { password, ...userWithoutPassword } = userInfo;
+    res.status(201).json({
       success: true,
-      message: "user added successfully",
+      message: "User registered successfully",
+      data: userWithoutPassword,
     });
   } catch (err: any) {
     res.status(400).json({
