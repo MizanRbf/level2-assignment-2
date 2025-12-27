@@ -7,6 +7,7 @@ export const pool = new Pool({
 
 // Init DB
 const initDB = async () => {
+  // users table
   await pool.query(`
     CREATE TABLE IF NOT EXISTS users(
     id SERIAL PRIMARY KEY,
@@ -19,6 +20,8 @@ const initDB = async () => {
     updated_at TIMESTAMP DEFAULT NOW()
     )
     `);
+
+  // vehicles table
   await pool.query(`
       CREATE TABLE IF NOT EXISTS vehicles(
       id SERIAL PRIMARY KEY,
@@ -31,6 +34,8 @@ const initDB = async () => {
       updated_at TIMESTAMP DEFAULT NOW()
       )
       `);
+
+  // bookings table
   await pool.query(`
         CREATE TABLE IF NOT EXISTS bookings (
         id SERIAL PRIMARY KEY,
