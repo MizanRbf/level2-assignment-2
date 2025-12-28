@@ -70,8 +70,15 @@ const updateVehicle = async (req: Request, res: Response) => {
     );
     res.status(200).json({
       success: true,
-      message: "Updated Successfully",
-      data: result.rows,
+      message: "Vehicle updated successfully",
+      data: {
+        id: result.rows[0].id,
+        vehicle_name: result.rows[0].vehicle_name,
+        type: result.rows[0].type,
+        registration_number: result.rows[0].registration_number,
+        daily_rent_price: Number(result.rows[0].daily_rent_price),
+        availability_status: result.rows[0].availability_status,
+      },
     });
   } catch (err: any) {
     res.status(400).json({
