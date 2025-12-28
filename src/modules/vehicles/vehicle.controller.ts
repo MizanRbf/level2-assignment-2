@@ -7,7 +7,7 @@ const createVehicle = async (req: Request, res: Response) => {
     const result = await vehicleServices.createVehicles(req.body);
     res.status(200).json({
       success: true,
-      message: "Vehicle inserted successfully",
+      message: "Vehicle created successfully",
       data: result.rows[0],
     });
   } catch (err: any) {
@@ -24,7 +24,7 @@ const getVehicle = async (req: Request, res: Response) => {
     const result = await vehicleServices.getVehicles();
     res.status(200).json({
       success: true,
-      message: "Vehicles Found",
+      message: "Vehicles retrieved successfully",
       data: result.rows,
     });
   } catch (err: any) {
