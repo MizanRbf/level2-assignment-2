@@ -26,7 +26,9 @@ const createVehicles = async (payload: Record<string, unknown>) => {
 
 // get vehicles
 const getVehicles = async () => {
-  const result = await pool.query(`SELECT * FROM vehicles`);
+  const result = await pool.query(
+    `SELECT id, vehicle_name, type, registration_number, daily_rent_price::FLOAT AS daily_rent_price, availability_status FROM vehicles`
+  );
   return result;
 };
 
