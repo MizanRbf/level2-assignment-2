@@ -96,7 +96,7 @@ const deleteVehicle = async (req: Request, res: Response) => {
     );
     res.status(200).json({
       success: true,
-      message: "Deleted Successfully",
+      message: "Vehicle deleted successfully",
     });
   } catch (err: any) {
     res.status(400).json({
