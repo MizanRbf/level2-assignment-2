@@ -6,9 +6,9 @@ const createBooking = async (req: Request, res: Response) => {
   try {
     const result = await bookingServices.createBooking(req.body);
 
-    res.status(200).json({
+    res.status(201).json({
       success: true,
-      message: "Bookings posted successfully",
+      message: "Booking created successfully",
       data: result.rows[0],
     });
   } catch (err: any) {
@@ -26,7 +26,7 @@ const getBookings = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: "Bookings data found successfully",
+      message: "Bookings retrieved successfully",
       data: result.rows,
     });
   } catch (err: any) {
