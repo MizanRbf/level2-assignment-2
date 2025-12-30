@@ -25,7 +25,7 @@ const getUser = async (req: Request, res: Response) => {
 const updateUser = async (req: Request, res: Response) => {
   try {
     const result = await userServices.updateUser(
-      Number(req.params.id),
+      Number(req.params.userId),
       req.body
     );
     const { password, ...rest } = result.rows[0];
@@ -45,10 +45,10 @@ const updateUser = async (req: Request, res: Response) => {
 // Delete User
 const deleteUser = async (req: Request, res: Response) => {
   try {
-    const result = await userServices.deleteUser(Number(req.params.id));
+    const result = await userServices.deleteUser(Number(req.params.userId));
     res.status(200).json({
       success: true,
-      message: "Deleted Successfully",
+      message: "User deleted successfully",
     });
   } catch (err: any) {
     res.status(400).json({
