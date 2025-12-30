@@ -28,10 +28,11 @@ const updateUser = async (req: Request, res: Response) => {
       Number(req.params.id),
       req.body
     );
+    const { password, ...rest } = result.rows[0];
     res.status(200).json({
       success: true,
-      message: "Updated Successfully",
-      data: result.rows,
+      message: "User updated successfully",
+      data: rest,
     });
   } catch (err: any) {
     res.status(400).json({
