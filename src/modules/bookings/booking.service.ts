@@ -59,7 +59,8 @@ const getBookings = async (role: string, id: number) => {
     return result;
   } else {
     const result = await pool.query(
-      `SELECT id,customer_id,vehicle_id,TO_CHAR(rent_start_date,'YYYY-MM-DD') AS rent_start_date, TO_CHAR(rent_end_date,'YYYY-MM-DD') AS rent_end_date,total_price FROM bookings`
+      `SELECT b.id,b.vehicle_id,TO_CHAR(b.rent_start_date,'YYYY-MM-DD') AS rent_start_date, TO_CHAR(b.rent_end_date,'YYYY-MM-DD') AS rent_end_date,b.total_price,b.status, json_build_object('vehicle_name',v.vehicle_name, 'registration_number',v.registration_number,'type',v.type) AS vehicle FROM bookings b JOIN vehicles v ON b.vehicle_id = v.id WHERE b.customer_id = $1`,
+      [id]
     );
     return result;
   }
