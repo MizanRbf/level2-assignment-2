@@ -34,7 +34,7 @@ const auth = (...roles: string[]) => {
         throw new Error("User not found");
       }
 
-      // allowed if roles.includes
+      // allowed if roles.includes admin
       if (roles.length && !roles.includes(decoded.role)) {
         return res.status(500).json({
           error: "unauthorized!!!",
