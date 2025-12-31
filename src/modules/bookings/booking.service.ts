@@ -27,8 +27,8 @@ const createBooking = async (payload: any) => {
   const total_price = dailyPrice * days;
   console.log(total_price);
 
-  const result = await pool.query(
-    `INSERT INTO bookings(customer_id,vehicle_id,rent_start_date,rent_end_date,total_price,status) VALUES($1,$2,$3,$4,$5,'active') RETURNING *`,
+  const insertRes = await pool.query(
+    `INSERT INTO bookings(customer_id,vehicle_id,rent_start_date,rent_end_date,total_price,status) VALUES($1,$2,$3,$4,$5,'active') RETURNING id`,
     [customer_id, vehicle_id, rent_start_date, rent_end_date, total_price]
   );
 
@@ -36,7 +36,17 @@ const createBooking = async (payload: any) => {
   pool.query(`UPDATE vehicles SET availability_status = 'booked' WHERE id=$1`, [
     vehicle_id,
   ]);
-  return result;
+
+  const bookingId = insertRes.rows[0].id;
+  const bookingRes = await pool.query(
+    `SELECT b.id, b.customer_id, b.vehicle_id,b.rent_start_date,b.rent_end_date,b.total_price,b.status,json_build_object(
+    'vehicle_name', v.vehicle_name,
+    'daily_rent_price',v.daily_rent_price
+    ) AS vehicle FROM bookings b JOIN vehicles v ON b.vehicle_id = v.id WHERE b.id = $1`,
+    [bookingId]
+  );
+
+  return bookingRes;
 };
 
 // Get Bookings
