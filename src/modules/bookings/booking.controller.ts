@@ -27,9 +27,7 @@ const getBookings = async (req: Request, res: Response) => {
 
   // Decode token
   const decoded = jwt.verify(token, config.jwtSecret as string) as JwtPayload;
-
   const { role, id } = decoded;
-
   try {
     const result = await bookingServices.getBookings(role, id);
 

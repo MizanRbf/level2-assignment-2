@@ -52,8 +52,17 @@ const createBooking = async (payload: any) => {
 
 // Get Bookings
 const getBookings = async (role: string, id: number) => {
-  const result = await pool.query(`SELECT  FROM bookings`);
-  return result;
+  if (role === "admin") {
+    const result = await pool.query(
+      `SELECT id,customer_id,vehicle_id,TO_CHAR(rent_start_date,'YYYY-MM-DD') AS rent_start_date, TO_CHAR(rent_end_date,'YYYY-MM-DD') AS rent_end_date,total_price,status FROM bookings`
+    );
+    return result;
+  } else {
+    const result = await pool.query(
+      `SELECT id,customer_id,vehicle_id,TO_CHAR(rent_start_date,'YYYY-MM-DD') AS rent_start_date, TO_CHAR(rent_end_date,'YYYY-MM-DD') AS rent_end_date,total_price FROM bookings`
+    );
+    return result;
+  }
 };
 
 // Update Bookings
