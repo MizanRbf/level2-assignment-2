@@ -37,6 +37,7 @@ const createBooking = async (payload: any) => {
     vehicle_id,
   ]);
 
+  // Add vehicle object
   const bookingId = insertRes.rows[0].id;
   const bookingRes = await pool.query(
     `SELECT b.id, b.customer_id, b.vehicle_id,TO_CHAR(b.rent_start_date,'YYYY-MM-DD') AS rent_start_date,TO_CHAR(b.rent_end_date,'YYYY-MM-DD') AS rent_end_date,b.total_price,b.status,json_build_object(
@@ -50,8 +51,8 @@ const createBooking = async (payload: any) => {
 };
 
 // Get Bookings
-const getBookings = async () => {
-  const result = await pool.query(`SELECT * FROM bookings`);
+const getBookings = async (role: string, id: number) => {
+  const result = await pool.query(`SELECT  FROM bookings`);
   return result;
 };
 

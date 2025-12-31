@@ -1,6 +1,7 @@
 import express from "express";
 import { bookingControllers } from "./booking.controller";
 import { userControllers } from "../users/user.controller";
+import auth from "../../middleware/auth";
 
 const router = express.Router();
 
@@ -8,7 +9,7 @@ const router = express.Router();
 router.post("/", bookingControllers.createBooking);
 
 // Get Router
-router.get("/", bookingControllers.getBookings);
+router.get("/", auth("admin", "customer"), bookingControllers.getBookings);
 
 // Update Booking
 router.put("/:bookingId", bookingControllers.updateBooking);
