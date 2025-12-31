@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 
 // Get User
 const getUser = async () => {
-  const result = await pool.query(`SELECT * FROM users`);
+  const result = await pool.query(`SELECT id,name,email,phone,role FROM users`);
   return result;
 };
 

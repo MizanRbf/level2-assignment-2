@@ -6,12 +6,13 @@ const getUser = async (req: Request, res: Response) => {
   try {
     const result = await userServices.getUser();
 
-    const users = result.rows.map(({ password, ...rest }) => rest);
+    // delete password
+    // const users = result.rows.map(({ password, ...rest }) => rest);
 
     res.status(200).json({
       success: true,
       message: "Users retrieved successfully",
-      data: users,
+      data: result.rows,
     });
   } catch (err: any) {
     res.status(400).json({
