@@ -39,7 +39,7 @@ const createBooking = async (payload: any) => {
 
   const bookingId = insertRes.rows[0].id;
   const bookingRes = await pool.query(
-    `SELECT b.id, b.customer_id, b.vehicle_id,b.rent_start_date,b.rent_end_date,b.total_price,b.status,json_build_object(
+    `SELECT b.id, b.customer_id, b.vehicle_id,TO_CHAR(b.rent_start_date,'YYYY-MM-DD') AS rent_start_date,TO_CHAR(b.rent_end_date,'YYYY-MM-DD') AS rent_end_date,b.total_price,b.status,json_build_object(
     'vehicle_name', v.vehicle_name,
     'daily_rent_price',v.daily_rent_price
     ) AS vehicle FROM bookings b JOIN vehicles v ON b.vehicle_id = v.id WHERE b.id = $1`,
