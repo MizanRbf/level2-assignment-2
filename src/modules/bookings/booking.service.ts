@@ -82,27 +82,20 @@ const updateBooking = async (
 
   const booking = bookingRes.rows[0];
 
-  //
+  //Role validation
+  if (role === "customer" && status !== "cancelled")
+    throw new Error("Customers can only cancel bookings");
+  if (role === "admin" && status !== "returned")
+    throw new Error("Admins can only mark bookings as returned");
 
-  const result = await pool.query(
-    `UPDATE bookings SET customer_id = $1,
-vehicle_id = $2,
-rent_start_date = $3,
-rent_end_date = $4,
-total_price = $5,
-status = $6 WHERE id = $7 RETURNING *`,
-    [
-      customer_id,
-      vehicle_id,
-      rent_start_date,
-      rent_end_date,
-      total_price,
-      status,
-      bookingId,
-    ]
+  // Update bookings
+  const updateBookingRes = await pool.query(
+    `UPDATE bookings SET status = $1 WHERE id = $2 RETURNING *`,
+    [status, bookingId]
   );
-  return result;
 };
+
+const updateBooking = updateBookingRes.rows[0];
 
 // Export
 export const bookingServices = {
