@@ -1,6 +1,6 @@
 # 🚗 Vehicle Rental System
 
-Vehicle Rental Booking API একটি role-based backend system, যেখানে customers গাড়ি বুক করতে পারে এবং admins বুকিং ম্যানেজ ও vehicle return হ্যান্ডেল করতে পারে।
+Vehicle Rental System একটি role-based backend system, যেখানে customers গাড়ি বুক করতে পারে এবং admins বুকিং ম্যানেজ ও vehicle return হ্যান্ডেল করতে পারে।
 এই প্রজেক্টটি clean architecture, business rules enforcement, এবং secure authentication অনুসরণ করে তৈরি।
 
 ---
@@ -52,7 +52,7 @@ A backend API for a vehicle rental management system that handles:
 
 ## ⚙️ Setup Instructions
 1️⃣ Clone the Repository
-git clone https://github.com/your-username/vehicle-rental-api.git
+git clone https://github.com/MizanRbf/level2-assignment-2.git
 cd vehicle-rental-api
 
 2️⃣ Install Dependencies
