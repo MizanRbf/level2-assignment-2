@@ -77,6 +77,13 @@ const updateBooking = async (
     bookingId,
   ]);
 
+  // throw error
+  if (bookingRes.rowCount === 0) throw new Error("Booking not found");
+
+  const booking = bookingRes.rows[0];
+
+  //
+
   const result = await pool.query(
     `UPDATE bookings SET customer_id = $1,
 vehicle_id = $2,
