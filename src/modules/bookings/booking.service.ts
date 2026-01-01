@@ -67,7 +67,7 @@ const getBookings = async (role: string, id: number) => {
 };
 
 // Update Bookings
-const updateBooking = async (bookingId: number, body: any) => {
+const updateBooking = async (bookingId: number, body: any, role: string) => {
   const {
     customer_id,
     vehicle_id,

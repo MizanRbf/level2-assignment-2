@@ -60,14 +60,20 @@ const updateBooking = async (req: Request, res: Response) => {
     // Decoded token
     const decoded = jwt.verify(token, config.jwtSecret as string) as JwtPayload;
 
+    const { role } = decoded;
+
     const result = await bookingServices.updateBooking(
       Number(bookingId),
-      req.body
+      req.body,
+      role
     );
     res.status(200).json({
       success: true,
-      message: "Updated Successfully",
-      data: result.rows,
+      message:
+        req.body.status === "cancelled"
+          ? "Booking cancelled successfully"
+          : "Booking marked as returned. Vehicle is now available",
+      data: result,
     });
   } catch (err: any) {
     res.status(400).json({
