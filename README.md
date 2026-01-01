@@ -8,38 +8,36 @@ Vehicle Rental Booking API একটি role-based backend system, যেখা�
 ## 🎯 Project Overview
 A backend API for a vehicle rental management system that handles:
 
-Vehicles - Manage vehicle inventory with availability tracking
-Customers - Manage customer accounts and profiles
-Bookings - Handle vehicle rentals, returns and cost calculation
-Authentication - Secure role-based access control (Admin and Customer roles)
+- Vehicles - Manage vehicle inventory with availability tracking
+- Customers - Manage customer accounts and profiles
+- Bookings - Handle vehicle rentals, returns and cost calculation
+- Authentication - Secure role-based access control (Admin and Customer roles)
 
 ---
 
 ## ✨ Features
 🔐 Authentication & Authorization
-JWT-based authentication
-Role-based access (customer, admin)
+- JWT-based authentication
+- Role-based access (customer, admin)
 
 🚘 Vehicle Management
-Vehicle create, update, delete (Admin only)
-Vehicle availability tracking
+- Vehicle create, update, delete (Admin only)
+- Vehicle availability tracking
 
 📅 Booking Management
-Customer booking creation
-Customer booking cancellation
-Admin booking return handling
-Automatic vehicle availability update on return
+- Customer booking creation
+- Customer booking cancellation
+- Admin booking return handling
+- Automatic vehicle availability update on return
 
 🛡 Business Rules
-Customers can only cancel bookings
-Admins can only mark bookings as returned
-Booking & vehicle consistency ensured
+- Customers can only cancel bookings
+- Admins can only mark bookings as returned
+- Booking & vehicle consistency ensured
 
 ---
 
 ## 🛠️ Technology Stack
-![Node.js](https://img.shields.io/badge/-Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
-![Express](https://img.shields.io/badge/-Express.js-000000?style=flat-square&logo=express&logoColor=white)
 ![Node.js](https://img.shields.io/badge/-Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
 ![Express.js](https://img.shields.io/badge/-Express.js-000000?style=flat-square&logo=express&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
