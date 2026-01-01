@@ -93,9 +93,24 @@ const updateBooking = async (
     `UPDATE bookings SET status = $1 WHERE id = $2 RETURNING *`,
     [status, bookingId]
   );
-};
 
-const updateBooking = updateBookingRes.rows[0];
+  const updateBooking = updateBookingRes.rows[0];
+
+  // if returned -> update vehicle availability
+  if (status === "returned") {
+    await pool.query(
+      `UPDATE vehicles SET availability_status = 'available' WHERE id = $1`,
+      [booking.vehicle_id]
+    );
+    return {
+      ...updateBooking,
+      vehicle: {
+        availability_status: "available",
+      },
+    };
+  }
+  return updateBooking;
+};
 
 // Export
 export const bookingServices = {
