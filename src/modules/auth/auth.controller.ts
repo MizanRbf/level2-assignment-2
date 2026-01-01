@@ -24,6 +24,7 @@ const createUser = async (req: Request, res: Response) => {
 // login user
 const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
+  console.log(req.body);
   try {
     const result = await authService.loginUser(email, password);
 
