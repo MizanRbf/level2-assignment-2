@@ -12,7 +12,11 @@ router.post("/", bookingControllers.createBooking);
 router.get("/", auth("admin", "customer"), bookingControllers.getBookings);
 
 // Update Booking
-router.put("/:bookingId", bookingControllers.updateBooking);
+router.put(
+  "/:bookingId",
+  auth("admin", "customer"),
+  bookingControllers.updateBooking
+);
 
 // Export
 export const bookingRoutes = router;
