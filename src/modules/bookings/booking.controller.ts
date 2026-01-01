@@ -54,6 +54,9 @@ const updateBooking = async (req: Request, res: Response) => {
     // Booking Id
     const bookingId = req.params.bookingId;
 
+    // Status
+    const { status } = req.body;
+
     // Token
     const token: any = req.headers.authorization;
 
@@ -64,13 +67,13 @@ const updateBooking = async (req: Request, res: Response) => {
 
     const result = await bookingServices.updateBooking(
       Number(bookingId),
-      req.body,
+      status,
       role
     );
     res.status(200).json({
       success: true,
       message:
-        req.body.status === "cancelled"
+        status === "cancelled"
           ? "Booking cancelled successfully"
           : "Booking marked as returned. Vehicle is now available",
       data: result,

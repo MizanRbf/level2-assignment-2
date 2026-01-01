@@ -67,15 +67,16 @@ const getBookings = async (role: string, id: number) => {
 };
 
 // Update Bookings
-const updateBooking = async (bookingId: number, body: any, role: string) => {
-  const {
-    customer_id,
-    vehicle_id,
-    rent_start_date,
-    rent_end_date,
-    total_price,
-    status,
-  } = body;
+const updateBooking = async (
+  bookingId: number,
+  status: string,
+  role: string
+) => {
+  // Fetch booking
+  const bookingRes = await pool.query(`SELECT * FROM bookings WHERE id = $1`, [
+    bookingId,
+  ]);
+
   const result = await pool.query(
     `UPDATE bookings SET customer_id = $1,
 vehicle_id = $2,
