@@ -1,4 +1,5 @@
 import { pool } from "../../config/db";
+import autoReturn from "../../utility/autoReturn";
 
 // Create Bookings
 const createBooking = async (payload: any) => {
@@ -49,20 +50,42 @@ const createBooking = async (payload: any) => {
   return bookingRes;
 };
 
-// Get Bookings
+// Get All Bookings
 const getBookings = async (role: string, id: number) => {
+  // fetch bookings
+  let result;
   if (role === "admin") {
-    const result = await pool.query(
+    result = await pool.query(
       `SELECT b.id,b.customer_id,b.vehicle_id,TO_CHAR(b.rent_start_date,'YYYY-MM-DD') AS rent_start_date, TO_CHAR(b.rent_end_date,'YYYY-MM-DD') AS rent_end_date,b.total_price,b.status, json_build_object('name',u.name,'email',u.email) AS customer, json_build_object('vehicle_name',v.vehicle_name,'registration_number',v.registration_number) AS vehicle FROM bookings b JOIN users u ON b.customer_id = u.id JOIN vehicles v ON b.vehicle_id = v.id`
     );
-    return result;
   } else {
-    const result = await pool.query(
+    result = await pool.query(
       `SELECT b.id,b.vehicle_id,TO_CHAR(b.rent_start_date,'YYYY-MM-DD') AS rent_start_date, TO_CHAR(b.rent_end_date,'YYYY-MM-DD') AS rent_end_date,b.total_price,b.status, json_build_object('vehicle_name',v.vehicle_name, 'registration_number',v.registration_number,'type',v.type) AS vehicle FROM bookings b JOIN vehicles v ON b.vehicle_id = v.id WHERE b.customer_id = $1`,
       [id]
     );
-    return result;
   }
+
+  // Auto returned logic
+  const bookings = result.rows;
+  // loop
+  for (const booking of bookings) {
+    // compare date
+    const rentEndDatePassed = new Date(booking.rent_end_date) < new Date();
+
+    // auto return
+    if (rentEndDatePassed) {
+      await pool.query(`UPDATE bookings SET status='returned' WHERE id=$1`, [
+        booking.id,
+      ]);
+
+      // Update vehicle availability
+      await pool.query(
+        `UPDATE vehicles SET availability_status='available' WHERE id=$1`,
+        [booking.vehicle_id]
+      );
+    }
+  }
+  return bookings;
 };
 
 // Update Bookings

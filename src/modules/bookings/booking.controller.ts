@@ -30,7 +30,7 @@ const getBookings = async (req: Request, res: Response) => {
 
   const { role, id } = decoded;
   try {
-    const result = await bookingServices.getBookings(role, id);
+    const bookings = await bookingServices.getBookings(role, id);
 
     res.status(200).json({
       success: true,
@@ -38,7 +38,7 @@ const getBookings = async (req: Request, res: Response) => {
         role === "admin"
           ? "Bookings retrieved successfully"
           : "Your bookings retrieved successfully",
-      data: result.rows,
+      data: bookings,
     });
   } catch (err: any) {
     res.status(400).json({
