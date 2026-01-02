@@ -4,7 +4,7 @@ import auth from "../../middleware/auth";
 const router = express.Router();
 
 // Post vehicles
-router.post("/", vehicleControllers.createVehicle);
+router.post("/", auth("admin"), vehicleControllers.createVehicle);
 
 // Get all vehicles
 router.get("/", vehicleControllers.getVehicle);
