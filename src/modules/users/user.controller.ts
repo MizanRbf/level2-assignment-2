@@ -25,10 +25,27 @@ const getUser = async (req: Request, res: Response) => {
 // Update User
 const updateUser = async (req: Request, res: Response) => {
   try {
-    const result = await userServices.updateUser(
-      Number(req.params.userId),
-      req.body
-    );
+    // userId
+    const userIdToUpdate = Number(req.params.userId);
+    // LoggedIn user
+    const loggedInUser = req.user; //from auth middleware
+
+    //  customer cannot update another user
+    if (loggedInUser.role !== "admin" && loggedInUser.id !== userIdToUpdate) {
+      return res.status(403).json({
+        success: false,
+        message: "You can update only your own profile",
+      });
+    }
+    // cannot update role
+    if (loggedInUser.role !== "admin" && "role" in req.body) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not allowed to update role",
+      });
+    }
+    // update
+    const result = await userServices.updateUser(userIdToUpdate, req.body);
     const { password, ...rest } = result.rows[0];
     res.status(200).json({
       success: true,

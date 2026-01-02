@@ -8,16 +8,27 @@ import { pool } from "../config/db";
 const auth = (...roles: string[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const token = req.headers.authorization;
+      const authHeader = req.headers.authorization;
+
       // Check Token
-      if (!token) {
+      if (!authHeader) {
         return res.status(500).json({
           success: false,
           message: "You are not allowed",
         });
       }
 
+      // Bearer token support
+      const token = authHeader.startsWith("Bearer ")
+        ? authHeader.split(" ")[1]
+        : authHeader;
+
       // If token found then decode it
+      if (!token) {
+        return res
+          .status(401)
+          .json({ success: false, message: "Token missing" });
+      }
       const decoded = jwt.verify(
         token,
         config.jwtSecret as string
@@ -26,15 +37,16 @@ const auth = (...roles: string[]) => {
       req.user = decoded;
 
       // Check user from db
-      const user = await pool.query(`SELECT * FROM users WHERE email = $1`, [
-        decoded.email,
-      ]);
+      const user = await pool.query(
+        `SELECT id, role FROM users WHERE email = $1`,
+        [decoded.email]
+      );
 
       if (user.rows.length === 0) {
         throw new Error("User not found");
       }
 
-      // allowed if roles.includes admin
+      // Role-based access
       if (roles.length && !roles.includes(decoded.role)) {
         return res.status(500).json({
           error: "unauthorized!!!",
