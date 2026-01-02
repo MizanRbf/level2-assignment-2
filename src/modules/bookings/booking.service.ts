@@ -1,5 +1,4 @@
 import { pool } from "../../config/db";
-import autoReturn from "../../utility/autoReturn";
 
 // Create Bookings
 const createBooking = async (payload: any) => {
