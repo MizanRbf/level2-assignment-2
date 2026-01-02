@@ -4,11 +4,11 @@ import auth from "../../middleware/auth";
 
 const router = express.Router();
 
-// Get user
+// Get All Users
 router.get("/", auth("admin"), userControllers.getUser);
 
 // Update user
-router.put("/:userId", userControllers.updateUser);
+router.put("/:userId", auth("admin", "customer"), userControllers.updateUser);
 
 // Delete user
 router.delete("/:userId", auth("admin"), userControllers.deleteUser);

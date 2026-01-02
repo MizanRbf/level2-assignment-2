@@ -9,13 +9,13 @@ router.post("/", auth("admin"), vehicleControllers.createVehicle);
 // Get all vehicles
 router.get("/", vehicleControllers.getVehicle);
 
-// Get single vehicles
+// Get Vehicle by ID
 router.get("/:vehicleId", vehicleControllers.getSingleVehicle);
 
-// Update vehicles
+// Update vehicle
 router.put("/:vehicleId", auth("admin"), vehicleControllers.updateVehicle);
 
-// Delete vehicles
+// Delete vehicle
 router.delete("/:vehicleId", auth("admin"), vehicleControllers.deleteVehicle);
 
 export const vehicleRoutes = router;
