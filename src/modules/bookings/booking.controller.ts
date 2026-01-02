@@ -52,24 +52,20 @@ const getBookings = async (req: Request, res: Response) => {
 const updateBooking = async (req: Request, res: Response) => {
   try {
     // Booking Id
-    const bookingId = req.params.bookingId;
+    const bookingId = Number(req.params.bookingId);
 
     // Status
     const { status } = req.body;
 
     // Token
-    const token: any = req.headers.authorization;
+    const token = req.headers.authorization as string;
 
     // Decoded token
     const decoded = jwt.verify(token, config.jwtSecret as string) as JwtPayload;
 
     const { role } = decoded;
 
-    const result = await bookingServices.updateBooking(
-      Number(bookingId),
-      status,
-      role
-    );
+    const result = await bookingServices.updateBooking(bookingId, status, role);
     res.status(200).json({
       success: true,
       message:

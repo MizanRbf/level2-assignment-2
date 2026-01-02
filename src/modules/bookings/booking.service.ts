@@ -81,22 +81,35 @@ const updateBooking = async (
 
   const booking = bookingRes.rows[0];
 
-  //Role validation
-  if (role === "customer" && status !== "cancelled")
-    throw new Error("Customers can only cancel bookings");
-  if (role === "admin" && status !== "returned")
-    throw new Error("Admins can only mark bookings as returned");
+  // Auto return logic
+  const rentEndDatePassed = new Date(booking.rent_end_date) < new Date();
 
-  // Update bookings
+  const isAutoReturned = booking.status === "active" && rentEndDatePassed;
+
+  let finalStatus = status;
+
+  if (booking.status === "active" && rentEndDatePassed) {
+    finalStatus = "returned";
+  }
+
+  //Role validation
+  if (!isAutoReturned) {
+    if (role === "customer" && finalStatus !== "cancelled")
+      throw new Error("Customers can only cancel bookings");
+    if (role === "admin" && finalStatus !== "returned")
+      throw new Error("Admins can only mark bookings as returned");
+  }
+
+  // Update booking status
   const updateBookingRes = await pool.query(
     `UPDATE bookings SET status = $1 WHERE id = $2 RETURNING *`,
-    [status, bookingId]
+    [finalStatus, bookingId]
   );
 
   const updateBooking = updateBookingRes.rows[0];
 
-  // if returned -> update vehicle availability
-  if (status === "returned" || "cancelled") {
+  // if cancelled or returned -> update vehicle availability
+  if (finalStatus === "returned" || finalStatus === "cancelled") {
     await pool.query(
       `UPDATE vehicles SET availability_status = 'available' WHERE id = $1`,
       [booking.vehicle_id]
