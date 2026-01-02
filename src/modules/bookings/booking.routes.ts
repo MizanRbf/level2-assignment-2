@@ -6,7 +6,7 @@ import auth from "../../middleware/auth";
 const router = express.Router();
 
 // Post Router
-router.post("/", bookingControllers.createBooking);
+router.post("/", auth("admin", "customer"), bookingControllers.createBooking);
 
 // Get Router
 router.get("/", auth("admin", "customer"), bookingControllers.getBookings);
