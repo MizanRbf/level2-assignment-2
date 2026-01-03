@@ -28,7 +28,7 @@ app.use("/api/v1/bookings", bookingRoutes);
 app.use("/api/v1/auth", authRoutes);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
+  res.send("Welcome to Vehicle Rental System!");
 });
 
 export default app;
