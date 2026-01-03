@@ -77,7 +77,7 @@ npm start
 ---
 
 ## 🔗 Live URL:
-👉 [https://your-live-api-url.com](https://level2-assignment-2-olive-three.vercel.app/)
+👉 [Click here](https://level2-assignment-2-olive-three.vercel.app/)
 
 
 
