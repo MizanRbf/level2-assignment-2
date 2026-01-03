@@ -15,10 +15,11 @@ const updateUser = async (
   body: any
 ) => {
   const { name, email, password, phone, role } = body;
-
+  // throw Error
   if (loggedInUserRole === "customer" && userId !== loggedInUserId) {
-    throw new Error("Customer cannot update the others user!!!");
+    throw new Error("Customer can update own profile only!!!");
   }
+
   let result;
   // customer update
   if (loggedInUserRole === "customer") {
