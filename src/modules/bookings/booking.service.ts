@@ -130,13 +130,15 @@ const updateBooking = async (
   if (booking.status === "cancelled") {
     throw new Error("Booking is already cancelled");
   }
-
+  // update booking
   const updateBookingRes = await pool.query(
-    `UPDATE bookings SET status = $1 WHERE id = $2 RETURNING *`,
+    `UPDATE bookings SET status = $1 WHERE id = $2 RETURNING id,customer_id,vehicle_id,TO_CHAR(rent_start_date,'YYYY-MM-DD') AS rent_start_date,TO_CHAR(rent_end_date,'YYYY-MM-DD') AS rent_end_date,total_price,status`,
     [finalStatus, bookingId]
   );
 
   const updateBooking = updateBookingRes.rows[0];
+
+  console.log(updateBooking);
 
   // if cancelled or returned -> update vehicle availability
   if (finalStatus === "returned" || finalStatus === "cancelled") {
@@ -144,12 +146,14 @@ const updateBooking = async (
       `UPDATE vehicles SET availability_status = 'available' WHERE id = $1`,
       [booking.vehicle_id]
     );
-    return {
-      ...updateBooking,
-      vehicle: {
-        availability_status: "available",
-      },
-    };
+    if (finalStatus === "returned") {
+      return {
+        ...updateBooking,
+        vehicle: {
+          availability_status: "available",
+        },
+      };
+    }
   }
   return updateBooking;
 };

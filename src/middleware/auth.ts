@@ -12,7 +12,7 @@ const auth = (...roles: string[]) => {
 
       // Check Token
       if (!authHeader) {
-        return res.status(500).json({
+        return res.status(401).json({
           success: false,
           message: "You are not allowed",
         });

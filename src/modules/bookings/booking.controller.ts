@@ -23,7 +23,25 @@ const createBooking = async (req: Request, res: Response) => {
 
 // Get Bookings
 const getBookings = async (req: Request, res: Response) => {
-  const token: any = req.headers.authorization;
+  const authHeader = req.headers.authorization;
+
+  // Check Token
+  if (!authHeader) {
+    return res.status(500).json({
+      success: false,
+      message: "You are not allowed",
+    });
+  }
+
+  // Bearer token support
+  const token = authHeader.startsWith("Bearer ")
+    ? authHeader.split(" ")[1]
+    : authHeader;
+
+  // If token found then decode it
+  if (!token) {
+    return res.status(401).json({ success: false, message: "Token missing" });
+  }
 
   // Decoded token
   const decoded = jwt.verify(token, config.jwtSecret as string) as JwtPayload;
@@ -57,10 +75,26 @@ const updateBooking = async (req: Request, res: Response) => {
     // Status
     const { status } = req.body;
 
-    // Token
-    const token = req.headers.authorization as string;
+    // authHeader
+    const authHeader = req.headers.authorization;
+
+    // Check Token
+    if (!authHeader) {
+      return res.status(401).json({
+        success: false,
+        message: "You are not allowed",
+      });
+    }
+
+    // Bearer token support
+    const token = authHeader.startsWith("Bearer ")
+      ? authHeader.split(" ")[1]
+      : authHeader;
 
     // Decoded token
+    if (!token) {
+      return res.status(401).json({ success: false, message: "Token missing" });
+    }
     const decoded = jwt.verify(token, config.jwtSecret as string) as JwtPayload;
 
     const { role } = decoded;
