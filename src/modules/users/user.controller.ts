@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { userServices } from "./user.service";
+import config from "../../config";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 // Get User
 const getUser = async (req: Request, res: Response) => {
@@ -27,25 +29,44 @@ const updateUser = async (req: Request, res: Response) => {
   try {
     // userId
     const userIdToUpdate = Number(req.params.userId);
-    // LoggedIn user
-    const loggedInUser = req.user; //from auth middleware
 
-    //  customer cannot update another user
-    if (loggedInUser.role !== "admin" && loggedInUser.id !== userIdToUpdate) {
-      return res.status(403).json({
+    // authHeader
+    const authHeader = req.headers.authorization;
+
+    // Check Token
+    if (!authHeader) {
+      return res.status(401).json({
         success: false,
-        message: "You can update only your own profile",
+        message: "You are not allowed",
       });
     }
-    // cannot update role
-    if (loggedInUser.role !== "admin" && "role" in req.body) {
-      return res.status(403).json({
-        success: false,
-        message: "You are not allowed to update role",
-      });
+
+    // Bearer token support
+    const token = authHeader.startsWith("Bearer ")
+      ? authHeader.split(" ")[1]
+      : authHeader;
+
+    // If token found then decode it
+    if (!token) {
+      return res.status(401).json({ success: false, message: "Token missing" });
     }
+
+    // decode token
+    const decoded = jwt.verify(token, config.jwtSecret as string) as JwtPayload;
+
+    // req.user = decoded;
+
+    // LoggedIn user
+    const loggedInUserId = decoded.id;
+    const loggedInUserRole = decoded.role;
+
     // update
-    const result = await userServices.updateUser(userIdToUpdate, req.body);
+    const result = await userServices.updateUser(
+      userIdToUpdate,
+      loggedInUserId,
+      loggedInUserRole,
+      req.body
+    );
     const { password, ...rest } = result.rows[0];
     res.status(200).json({
       success: true,

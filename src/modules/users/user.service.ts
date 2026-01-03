@@ -8,13 +8,34 @@ const getUser = async () => {
 };
 
 // Update users
-const updateUser = async (id: number, body: any) => {
+const updateUser = async (
+  userId: number,
+  loggedInUserId: number,
+  loggedInUserRole: string,
+  body: any
+) => {
   const { name, email, password, phone, role } = body;
-  const result = await pool.query(
-    `UPDATE users SET name = COALESCE($1,name), email = COALESCE($2,email), password = COALESCE($3,password), phone = COALESCE($4,phone), role = COALESCE($5,role)  WHERE id = $6 RETURNING *`,
-    [name, email, password, phone, role, id]
-  );
-  return result;
+
+  if (loggedInUserRole === "customer" && userId !== loggedInUserId) {
+    throw new Error("Customer cannot update the others user!!!");
+  }
+  let result;
+  // customer update
+  if (loggedInUserRole === "customer") {
+    result = await pool.query(
+      `UPDATE users SET name = COALESCE($1,name), email = COALESCE($2,email), password = COALESCE($3,password), phone = COALESCE($4,phone), role = COALESCE($5,role)  WHERE id = $6 AND id = $7 RETURNING *`,
+      [name, email, password, phone, role, userId, loggedInUserId]
+    );
+  }
+
+  // admin update
+  if (loggedInUserRole === "admin") {
+    result = await pool.query(
+      `UPDATE users SET name = COALESCE($1,name), email = COALESCE($2,email), password = COALESCE($3,password), phone = COALESCE($4,phone), role = COALESCE($5,role)  WHERE id = $6 RETURNING *`,
+      [name, email, password, phone, role, userId]
+    );
+  }
+  return result as any;
 };
 
 // Delete Users
