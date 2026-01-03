@@ -30,7 +30,7 @@ const loginUser = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: "Login successful",
+      message: result === null ? "User not found" : "Login successful",
       data: result,
     });
   } catch (err: any) {
