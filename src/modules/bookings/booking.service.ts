@@ -123,6 +123,14 @@ const updateBooking = async (
   }
 
   // Update booking status
+
+  if (booking.status === "returned") {
+    throw new Error("Booking is already returned");
+  }
+  if (booking.status === "cancelled") {
+    throw new Error("Booking is already cancelled");
+  }
+
   const updateBookingRes = await pool.query(
     `UPDATE bookings SET status = $1 WHERE id = $2 RETURNING *`,
     [finalStatus, bookingId]
