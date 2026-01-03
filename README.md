@@ -51,29 +51,33 @@ A backend API for a vehicle rental management system that handles:
 ---
 
 ## ⚙️ Setup Instructions
-1️⃣ Clone the Repository
+1. Clone the Repository
+```bash
 git clone https://github.com/MizanRbf/level2-assignment-2.git
-cd vehicle-rental-api
-
-2️⃣ Install Dependencies
+cd level2-assignment-2
+```
+2️. Install Dependencies
+```bash
 npm install
-
-3️⃣ Environment Variables
-
+```
+3️. Environment Variables
 Create a .env file in the root directory:
+env
+Replace PORT,CONNECTION_STR, and JWT_SECRET with your own values.
 
-PORT=5000
-DATABASE_URL=postgresql://user:password@localhost:5432/vehicle_rental
-JWT_SECRET=your_jwt_secret
-
-▶️ Running the Application
+4. Running the Application
 Development Mode
+```bash
 npm run dev
-
-Production Build
+```
+5. Production build
+```bash
 npm run build
-npm start
-
+```
+6. Production deploy
+   ```bash
+   vercel --prod
+   ```
 ---
 
 ## 🔗 Live URL:
